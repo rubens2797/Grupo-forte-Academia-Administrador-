@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style-estoque-dono.css">
+    <link rel="stylesheet" href="estoque.css">
+    <title>Estoque</title>
+</head>
+<body>
+  <div class="navigation">
+    <ul>
+        <li class="list">
+            <a href="index.html">
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                <span class="title">Home</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="alunos-menu-dono.html">
+                <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                <span class="title">Alunos</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="funcionario-dono.html">
+                <span class="icon"><ion-icon name="man-outline"></ion-icon></span>
+                <span class="title">Funcionario</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="mensagens-dono.html">
+                <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
+                <span class="title">Mensagens</span>
+            </a>
+        </li>
+        <li class="list active">
+            <a href="estoque-dono.html">
+                <span class="icon"><ion-icon name="pricetags-outline"></ion-icon></ion-icon></span>
+                <span class="title">Estoque</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="">
+                <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                <span class="title">Sair</span>
+            </a>
+        </li>
+    </ul>
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script>
+    const list = document.querySelectorAll('.list');
+    
+    function activelink() {
+        list.forEach((item) => item.classList.remove('active'));
+        this.classList.add('active');
+    }
+    
+    list.forEach((item) => item.addEventListener('click', activelink));
+  
+
+  
+  </script>
+
+<style>
+    .produto-baixo-estoque {
+        background-color: #ffcccc;
+    }
+    .feedback {
+        margin-top: 10px;
+        padding: 10px;
+        color: white;
+        font-weight: bold;
+    }
+    .erro {
+        background-color: #f44336;
+    }
+    .sucesso {
+        background-color: #4CAF50;
+    }
+    #alerta-estoque-baixo {
+        color: red;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+    <div class="estoque">
+<h1>Gestão de Estoque de Produtos</h1>
+
+<input type="text" id="pesquisa" placeholder="Pesquise por nome do produto" onkeyup="filtrarProdutos()">
+<div id="feedback"></div>
+
+<form id="form-produto">
+    <input type="hidden" id="produto-id">
+    <input type="text" id="nome" placeholder="Nome do Produto" required>
+    <input type="number" id="preco" placeholder="Preço" required>
+    <input type="number" id="quantidade" placeholder="Quantidade" required>
+    <button type="submit">Salvar Produto</button>
+</form>
+
+<div id="alerta-estoque-baixo" style="display: none;"></div>
+
+<table id="tabela-estoque" border="1">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Produtos serão listados aqui -->
+    </tbody>
+</table>
+</div>
+<script>
+    
+    // Função para exibir feedback (sucesso ou erro)
+    function exibirFeedback(mensagem, tipo) {
+        const feedbackElement = document.getElementById('feedback');
+        feedbackElement.textContent = mensagem;
+        feedbackElement.className = `feedback ${tipo}`;
+        setTimeout(() => {
+            feedbackElement.textContent = ''; // Limpa a mensagem após 3 segundos
+        }, 3000);
+    }
+
+    // Função para salvar estoque no localStorage
+    function salvarEstoque(estoque) {
+        localStorage.setItem('estoque', JSON.stringify(estoque));
+    }
+
+    // Função para carregar o estoque
+    function carregarEstoque(filtro = '') {
+        const estoque = JSON.parse(localStorage.getItem('estoque')) || [];
+        const tabela = document.getElementById('tabela-estoque').getElementsByTagName('tbody')[0];
+        tabela.innerHTML = ''; // Limpa a tabela atual
+
+        const produtosFiltrados = estoque.filter(produto => produto.nome.toLowerCase().includes(filtro));
+
+        produtosFiltrados.forEach(produto => {
+            const linha = tabela.insertRow();
+            const isBaixoEstoque = produto.quantidade <= 5; // Verifica se o produto está com estoque baixo
+
+            const linhaClasse = isBaixoEstoque ? 'produto-baixo-estoque' : '';
+            linha.innerHTML = `
+                <td>${produto.nome}</td>
+                <td>R$ ${produto.preco.toFixed(2)}</td>
+                <td>
+                    <span>${produto.quantidade}</span>
+                    <button onclick="editarQuantidade(${produto.id})">Editar Quantidade</button>
+                </td>
+                <td>
+                    <button onclick="editarProduto(${produto.id})">Editar</button>
+                    <button onclick="removerProduto(${produto.id})">Remover</button>
+                </td>
+            `;
+            linha.className = linhaClasse; // Adiciona a classe se for baixo estoque
+        });
+
+        // Atualiza o alerta de estoque baixo
+        verificarEstoqueBaixo();
+    }
+
+    // Função para verificar produtos com estoque baixo
+    function verificarEstoqueBaixo() {
+        const estoque = JSON.parse(localStorage.getItem('estoque')) || [];
+        const alertaElement = document.getElementById('alerta-estoque-baixo');
+        const produtosBaixos = estoque.filter(produto => produto.quantidade <= 5); // Limite de alerta
+
+        // Exibir alerta
+        if (produtosBaixos.length > 0) {
+            alertaElement.style.display = 'block';
+            alertaElement.textContent = `Atenção! Existem ${produtosBaixos.length} produto(s) com estoque baixo!`;
+        } else {
+            alertaElement.style.display = 'none';
+        }
+    }
+
+    // Função para editar a quantidade diretamente na tabela
+    function editarQuantidade(id) {
+        const estoque = JSON.parse(localStorage.getItem('estoque')) || [];
+        const produto = estoque.find(p => p.id === id);
+
+        if (produto) {
+            const novaQuantidade = prompt('Informe a nova quantidade:', produto.quantidade);
+            if (novaQuantidade !== null && !isNaN(novaQuantidade) && novaQuantidade >= 0) {
+                produto.quantidade = parseInt(novaQuantidade);
+                salvarEstoque(estoque);
+                carregarEstoque();
+                exibirFeedback('Quantidade atualizada com sucesso!', 'sucesso');
+            } else {
+                exibirFeedback('Quantidade inválida.', 'erro');
+            }
+        }
+    }
+
+    // Função para editar um produto
+    function editarProduto(id) {
+        const estoque = JSON.parse(localStorage.getItem('estoque')) || [];
+        const produto = estoque.find(p => p.id === id);
+
+        if (produto) {
+            document.getElementById('produto-id').value = produto.id;
+            document.getElementById('nome').value = produto.nome;
+            document.getElementById('preco').value = produto.preco;
+            document.getElementById('quantidade').value = produto.quantidade;
+        }
+    }
+
+    // Função para remover um produto
+    function removerProduto(id) {
+        const confirmacao = confirm('Tem certeza que deseja remover este produto?');
+
+        if (confirmacao) {
+            let estoque = JSON.parse(localStorage.getItem('estoque')) || [];
+            estoque = estoque.filter(produto => produto.id !== id);
+
+            salvarEstoque(estoque);
+            carregarEstoque();
+            exibirFeedback('Produto removido com sucesso!', 'sucesso');
+        } else {
+            exibirFeedback('Remoção cancelada.', 'erro');
+        }
+    }
+
+    // Função para adicionar ou editar produto no estoque
+    document.getElementById('form-produto').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const id = document.getElementById('produto-id').value;
+        const nome = document.getElementById('nome').value.trim();
+        const preco = parseFloat(document.getElementById('preco').value);
+        const quantidade = parseInt(document.getElementById('quantidade').value);
+
+        if (!nome || nome.length === 0) {
+            exibirFeedback('Nome do produto é obrigatório.', 'erro');
+            return;
+        }
+
+        if (isNaN(preco) || preco <= 0) {
+            exibirFeedback('Preço deve ser um número positivo.', 'erro');
+            return;
+        }
+
+        if (isNaN(quantidade) || quantidade < 0) {
+            exibirFeedback('Quantidade deve ser um número maior ou igual a 0.', 'erro');
+            return;
+        }
+
+        let estoque = JSON.parse(localStorage.getItem('estoque')) || [];
+
+        if (id) {
+            // Editando um produto
+            const index = estoque.findIndex(produto => produto.id === parseInt(id));
+            if (index !== -1) {
+                estoque[index] = { id: parseInt(id), nome, preco, quantidade };
+                exibirFeedback('Produto editado com sucesso!', 'sucesso');
+            }
+        } else {
+            // Adicionando um novo produto
+            const novoProduto = {
+                id: Date.now(),
+                nome,
+                preco,
+                quantidade
+            };
+            estoque.push(novoProduto);
+            exibirFeedback('Produto adicionado com sucesso!', 'sucesso');
+        }
+
+        salvarEstoque(estoque);
+        carregarEstoque();
+        document.getElementById('form-produto').reset();
+        document.getElementById('produto-id').value = ''; // Limpar o campo de ID
+    });
+
+    // Função de pesquisa
+    function filtrarProdutos() {
+        const pesquisa = document.getElementById('pesquisa').value.toLowerCase();
+        carregarEstoque(pesquisa);
+    }
+
+    // Carrega o estoque ao inicializar a página
+    document.addEventListener('DOMContentLoaded', carregarEstoque);
+</script>
+
+</body>
+</html>

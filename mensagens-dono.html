@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style-mensagens-dono.css">
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+<link rel="stylesheet" href="chat.css">
+    
+    <title>Grupo Forte Academia</title>
+</head>
+<body>
+  <div class="navigation">
+    <ul>
+        <li class="list">
+            <a href="index.html">
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                <span class="title">Home</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="alunos-menu-dono.html">
+                <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                <span class="title">Alunos</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="funcionario-dono.html">
+                <span class="icon"><ion-icon name="man-outline"></ion-icon></span>
+                <span class="title">Funcionario</span>
+            </a>
+        </li>
+        <li class="list active">
+            <a href="mensagens-dono.html">
+                <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
+                <span class="title">Mensagens</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="estoque-dono.html">
+                <span class="icon"><ion-icon name="pricetags-outline"></ion-icon></ion-icon></span>
+                <span class="title">Estoque</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="">
+                <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                <span class="title">Sair</span>
+            </a>
+        </li>
+    </ul>
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script>
+    const list = document.querySelectorAll('.list');
+    
+    function activelink() {
+        list.forEach((item) => item.classList.remove('active'));
+        this.classList.add('active');
+    }
+    
+    list.forEach((item) => item.addEventListener('click', activelink));
+  
+
+  
+  </script>
+
+  <!-- Tela de Login -->
+  <div class="login-container" id="loginContainer">
+    <h2>Login no Chat</h2>
+    <input type="text" id="userName" placeholder="Digite seu nome" required />
+    <select id="userType">
+        <option value="Instrutor">Instrutor</option>
+        <option value="Funcionário">Funcionário</option>
+        <option value="Admin">Admin</option>
+    </select>
+    <button id="loginBtn">Entrar</button>
+</div>
+
+<!-- Tela do Chat -->
+<div class="chat-container" id="chatContainer" style="display:none;">
+    <div class="chat-header">
+        <h2>Chat da Academia</h2>
+        <div class="user-info">
+            <strong id="userInfo"></strong>
+            <button id="logoutBtn">Sair</button>
+        </div>
+    </div>
+
+    <div class="chat-box" id="chatBox">
+        <!-- As mensagens vão aparecer aqui -->
+    </div>
+
+    <div class="chat-input">
+        <input type="text" id="messageInput" placeholder="Digite sua mensagem..." required />
+        <button id="sendMessageBtn">Enviar</button>
+    </div>
+</div>
+
+<script src="chat.js"></script>
+
+
+</body>
+</html>

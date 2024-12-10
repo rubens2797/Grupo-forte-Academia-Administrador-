@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style-funcionario-dono.css">
+    <link rel="stylesheet" href="gestaofuncio.css">
+    <title>Funcionario</title>
+</head>
+
+
+<body>
+  <div class="navigation">
+    <ul>
+        <li class="list">
+            <a href="index.html">
+                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                <span class="title">Home</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="alunos-menu-dono.html">
+                <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                <span class="title">Alunos</span>
+            </a>
+        </li>
+        <li class="list active">
+            <a href="funcionario-dono.html">
+                <span class="icon"><ion-icon name="man-outline"></ion-icon></span>
+                <span class="title">Funcionario</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="mensagens-dono.html">
+                <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
+                <span class="title">Mensagens</span>
+            </a>
+        </li>
+       
+        <li class="list">
+            <a href="estoque-dono.html">
+                <span class="icon"><ion-icon name="pricetags-outline"></ion-icon></ion-icon></span>
+                <span class="title">Estoque</span>
+            </a>
+        </li>
+        <li class="list">
+            <a href="">
+                <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                <span class="title">Sair</span>
+            </a>
+        </li>
+    </ul>
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+  <script>
+    const list = document.querySelectorAll('.list');
+    
+    function activelink() {
+        list.forEach((item) => item.classList.remove('active'));
+        this.classList.add('active');
+    }
+    
+    list.forEach((item) => item.addEventListener('click', activelink));
+
+  
+  </script>
+
+
+
+<!-- Página de Login -->
+    <div id="login-container" class="login-container">
+        <form id="login-form" onsubmit="login(event)">
+            <input type="text" id="username" placeholder="Usuário" required />
+            <input type="password" id="password" placeholder="Senha" required />
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+ <div class="funcionario">
+    <!-- Página Principal - Gestão de Funcionários -->
+    <div id="main-container" class="container" style="display: none;">
+        <h1>Gestão de Funcionários da Academia</h1>
+
+        <!-- Barra de Pesquisa -->
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Buscar por nome ou cargo..." onkeyup="pesquisarFuncionario()" />
+        </div>
+
+        <!-- Lista de Funcionários -->
+        <ul id="lista-funcionarios">
+            <li>
+                <div class="funcionario-info">
+                    <span>Maria Oliveira</span>
+                    <span>Cargo: Personal Trainer</span>
+                    <span>Status: Ativo</span>
+                    <span>Salário: R$ 4.500,00</span>
+                </div>
+                <div class="button-container">
+                    <button class="edit-button" onclick="editarFuncionario(1)">Editar</button>
+                    <button onclick="excluirFuncionario(1)">Excluir</button>
+                    <button class="whatsapp-button" onclick="contatarFuncionario('987654321')">WhatsApp</button>
+                    <button onclick="verHistorico(1)">Histórico</button>
+                </div>
+            </li>
+            <!-- Outros funcionários -->
+        </ul>
+
+        <!-- Modal de Edição -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <h3>Editar Funcionário</h3>
+                <input type="text" id="editNome" placeholder="Nome do funcionário" />
+                <input type="text" id="editCargo" placeholder="Cargo do funcionário" />
+                <input type="date" id="editAdmissao" placeholder="Data de Admissão" />
+                <input type="number" id="editSalario" placeholder="Salário" />
+                <select id="editStatus">
+                    <option value="ativo">Ativo</option>
+                    <option value="inativo">Inativo</option>
+                </select>
+                <button onclick="salvarEdicao()">Salvar</button>
+                <button onclick="fecharModal()">Cancelar</button>
+            </div>
+        </div>
+
+        <!-- Modal de Histórico -->
+        <div id="historicoModal" class="modal">
+            <div class="modal-content">
+                <h3>Histórico do Funcionário</h3>
+                <ul id="historico-list">
+                    <li>Promoção para cargo de Personal Trainer em 2023</li>
+                    <li>Avaliação de desempenho em Dezembro de 2023: Excelente</li>
+                    <!-- Outros históricos -->
+                </ul>
+                <button onclick="fecharHistorico()">Fechar</button>
+            </div>
+        </div>
+
+        <footer>
+            <button onclick="gerarRelatorio()">Gerar Relatório</button>
+            <div id="relatorioResultado" style="display:none;"></div>
+        </footer>
+        
+    </div>
+</div>
+    <script src="gestaofuncio.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+/* Estilos Globais */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f7fa;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos de Login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+   margin-top: -90px;
+   margin-left: 700px;
+    position: fixed;
+}
+
+.login-container form {
+    background-color: #ecf0f1;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+/* Inputs do formulário */
+.login-container input {
+    padding: 12px;
+    margin: 10px 0;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border 0.3s;
+}
+
+/* Estilo ao focar nos inputs */
+.login-container input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+/* Botão de Login */
+.login-container button {
+    padding: 12px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.login-container button:hover {
+    background-color: #2980b9;
+}
+
+/* Mensagem de erro (caso necessário) */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Estilos para o painel principal */
+.main-container {
+    display: none;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    
+    
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+/* Barra de pesquisa */
+.search-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.search-container input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+    font-size: 14px;
+}
+
+/* Lista de funcionários */
+.lista-funcionarios ul {
+    list-style: none;
+    padding: 0;
+}
+
+.lista-funcionarios li {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.funcionario-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.button-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.button-container button {
+    padding: 8px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 5px;
+    
+}
+
+.button-container button:hover {
+    background-color: #2980b9;
+}
+
+button.whatsapp-button {
+    background-color: #25d366;
+}
+
+button.whatsapp-button:hover {
+    background-color: #128c7e;
+}
+
+button.history-button {
+    background-color: #f39c12;
+}
+
+button.history-button:hover {
+    background-color: #e67e22;
+}
+
+/* Modais */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 6px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.modal input, .modal select {
+    padding: 10px;
+    width: 100%;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal button {
+    padding: 12px 18px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.modal button:hover {
+    background-color: #2980b9;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #ecf0f1;
+    margin-top: 40px;
+}
+
+footer button {
+    padding: 12px 25px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer button:hover {
+    background-color: #2980b9;
+}
+
+/* Estilo do Relatório */
+#relatorioResultado {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 6px;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.funcionario{
+    background-color: white;
+    position: fixed;
+    margin-top: 200px;
+    margin-left: 600px;
+    width: 600px;
+   
+}

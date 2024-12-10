@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+form, .pesquisa {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+.pesquisa input {
+    width: 40%;
+    
+
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.produto-baixo-estoque {
+    background-color: #ffcc00; /* Amarelo para chamar a atenção */
+    color: black;
+    font-weight: bold;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.feedback {
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.sucesso {
+    background-color: #28a745;
+    color: white;
+}
+
+.erro {
+    background-color: #dc3545;
+    color: white;
+}
+
+.estoque{
+   position: fixed;
+   margin-top: 200px;
+   margin-left: 600px;
+  
+  
+}
